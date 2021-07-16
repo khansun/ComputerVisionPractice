@@ -1,0 +1,18 @@
+{
+    "os": "Windows-10-10.0.19041-SP0",
+    "python": "3.8.7",
+    "heartbeatAt": "2021-03-03T10:23:59.714152",
+    "startedAt": "2021-03-03T10:23:56.096149",
+    "docker": null,
+    "gpu": "GeForce GTX 1050",
+    "gpu_count": 1,
+    "cpu_count": 8,
+    "cuda": null,
+    "args": [],
+    "state": "running",
+    "program": "oneShot.py",
+    "codePath": "oneShot.py",
+    "host": "MSI-GS63S",
+    "username": "KhanSun",
+    "executable": "C:\\Program Files\\Python38\\python.exe"
+}
