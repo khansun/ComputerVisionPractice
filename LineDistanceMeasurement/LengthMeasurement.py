@@ -2,13 +2,8 @@ import cv2 as cv
 import numpy as np
 import re
 
-def getContourPoints(img, cannyHigh=100, cannyLow=50, minArea=1000, corners=0, draw =False):
-    grayImg = cv.cvtColor(img,cv.COLOR_BGR2GRAY)
-    gaussImg = cv.GaussianBlur(grayImg,(5,5),1)
-    cannyImg = cv.Canny(gaussImg,cannyHigh,cannyLow,apertureSize=3)
-    mask = np.ones((5,5))
-    dilatedImg = cv.dilate(cannyImg,mask,iterations=2)
-    closedImg = cv.erode(dilatedImg,mask,iterations=2)
+def getContourPoints(img, minArea=1000, corners=0, draw =False):
+    closedImg = getClosedImg(img)
     contours,hierarchy = cv.findContours(closedImg,cv.RETR_EXTERNAL,cv.CHAIN_APPROX_SIMPLE)
     outContours = []
     
@@ -29,6 +24,17 @@ def getContourPoints(img, cannyHigh=100, cannyLow=50, minArea=1000, corners=0, d
         for con in outContours:
             cv.drawContours(img,con[4],-1,(255,0,0),5)
     return outContours, hierarchy
+
+
+def getClosedImg(img, cannyHigh=100, cannyLow=50):
+    grayImg = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
+    gaussImg = cv.GaussianBlur(grayImg, (5, 5), 1)
+    cannyImg = cv.Canny(gaussImg, cannyHigh, cannyLow, apertureSize=3)
+    mask = np.ones((5, 5))
+    dilatedImg = cv.dilate(cannyImg, mask, iterations=2)
+    closedImg = cv.erode(dilatedImg, mask, iterations=2)
+    return closedImg
+
 
 def shiftCorners(points):
     newPoints = np.zeros_like(points)
